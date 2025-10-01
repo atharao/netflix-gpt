@@ -2,7 +2,7 @@ import React from 'react'
 
 const Header = () => {
   return (
-    <div className="flex items-center justify-between p-4 text-white bg-blue-900">
+    <div className="flex items-center justify-between p-4 text-white bg-black">
       <h1 className="text-2xl font-bold">Netflix GPT</h1>
       <nav>
         <ul className="flex space-x-4">

@@ -17,7 +17,7 @@ const router = createBrowserRouter([
 
 const Body = () => {
   return (
-    <div>
+    <div className='flex flex-col min-h-screen'>
       <RouterProvider router={router} />
     </div>
   )
