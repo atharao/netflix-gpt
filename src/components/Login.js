@@ -1,11 +1,24 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Header from "./Header";
+import validate from "../utils/validate";
 
 const Login = () => {
   const [LoggedIn, setLoggedIn] = useState(false);
+  const [Response, setResponse] = useState("");
+
+  const email = useRef();
+  const password = useRef();
 
   const toggleLogin = () => {
     setLoggedIn(!LoggedIn);
+  };
+
+  const handleLogin = () => {
+    console.log(email.current.value, password.current.value);
+    
+    // Add login logic here
+    const response = validate(email.current.value, password.current.value);
+    setResponse(response);
   };
 
   return (
@@ -20,24 +33,39 @@ const Login = () => {
             <div className="mb-4">
               {LoggedIn && (
                 <input
-                placeholder="Name"
-                type="text"
-                className="w-full p-2 my-2 bg-gray-800 border border-gray-600 rounded"
+                  placeholder="Name"
+                  type="text"
+                  className="w-full p-2 my-2 bg-gray-800 border border-gray-600 rounded"
                 />
               )}
               <input
+                ref={email}
                 placeholder="Email or phone number"
                 type="email"
                 className="w-full p-2 my-2 bg-gray-800 border border-gray-600 rounded"
-                />
+              />
               <input
+                ref={password}
                 placeholder="Password"
                 type="password"
                 className="w-full p-2 my-2 bg-gray-800 border border-gray-600 rounded"
-                />
+              />
+
+              <button
+                className="w-full p-2 my-2 bg-blue-600 border border-blue-700 rounded"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleLogin();
+                }}
+              >
+                {LoggedIn ? "Sign Up" : "Sign In"}
+              </button>
+              <p className="text-sm font-bold text-red-600">{Response}</p>
             </div>
             <p className="mt-4 cursor-pointer" onClick={toggleLogin}>
-              {LoggedIn ? "Already have an account? Sign in now" : "New to Netflix? Sign up now"}
+              {LoggedIn
+                ? "Already have an account? Sign in now"
+                : "New to Netflix? Sign up now"}
             </p>
           </div>
         </form>
