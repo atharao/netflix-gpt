@@ -1,24 +1,63 @@
 import React, { useRef, useState } from "react";
 import Header from "./Header";
 import validate from "../utils/validate";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { auth } from "../utils/firebase";
 
 const Login = () => {
-  const [LoggedIn, setLoggedIn] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(false);
   const [Response, setResponse] = useState("");
 
   const email = useRef();
   const password = useRef();
 
   const toggleLogin = () => {
-    setLoggedIn(!LoggedIn);
+    setIsSignUp(!isSignUp);
   };
 
   const handleLogin = () => {
-    console.log(email.current.value, password.current.value);
-    
-    // Add login logic here
     const response = validate(email.current.value, password.current.value);
     setResponse(response);
+
+    if (response) return;
+
+    if (isSignUp) {
+      createUserWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          console.log(user);
+          // ...
+        })
+        .catch((error) => {
+          const errorMessage = error.message;
+          setResponse(errorMessage);
+          // ..
+        });
+    } else {
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          console.log(user);
+          // ...
+        })
+        .catch((error) => {
+          const errorMessage = error.message;
+          setResponse(errorMessage);
+        });
+    }
   };
 
   return (
@@ -28,10 +67,10 @@ const Login = () => {
         <form>
           <div className="w-full max-w-md p-8 text-white bg-black rounded-md bg-opacity-70">
             <h2 className="mb-6 text-3xl font-bold">
-              {LoggedIn ? "Sing Up" : "Sign In"}
+              {isSignUp ? "Sign Up" : "Sign In"}
             </h2>
             <div className="mb-4">
-              {LoggedIn && (
+              {isSignUp && (
                 <input
                   placeholder="Name"
                   type="text"
@@ -52,18 +91,18 @@ const Login = () => {
               />
 
               <button
-                className="w-full p-2 my-2 bg-blue-600 border border-blue-700 rounded"
+                className="w-full p-2 my-2 bg-red-600 border border-red-700 rounded"
                 onClick={(e) => {
                   e.preventDefault();
                   handleLogin();
                 }}
               >
-                {LoggedIn ? "Sign Up" : "Sign In"}
+                {isSignUp ? "Sign Up" : "Sign In"}
               </button>
               <p className="text-sm font-bold text-red-600">{Response}</p>
             </div>
             <p className="mt-4 cursor-pointer" onClick={toggleLogin}>
-              {LoggedIn
+              {isSignUp
                 ? "Already have an account? Sign in now"
                 : "New to Netflix? Sign up now"}
             </p>
