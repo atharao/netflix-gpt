@@ -1,9 +1,9 @@
 import React, { useRef, useState } from "react";
-import Header from "./Header";
 import validate from "../utils/validate";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
 
@@ -13,6 +13,7 @@ const Login = () => {
 
   const email = useRef();
   const password = useRef();
+  const name = useRef();
 
   const toggleLogin = () => {
     setIsSignUp(!isSignUp);
@@ -31,15 +32,22 @@ const Login = () => {
         password.current.value
       )
         .then((userCredential) => {
-          // Signed in
+          console.log(userCredential);
+          
           const user = userCredential.user;
-          console.log(user);
-          // ...
+          updateProfile(user, {
+            displayName: name.current.value,
+          })
+            .then(() => {
+              // Profile updated!
+            })
+            .catch((error) => {
+              setResponse(error.message);
+            });
         })
         .catch((error) => {
           const errorMessage = error.message;
           setResponse(errorMessage);
-          // ..
         });
     } else {
       signInWithEmailAndPassword(
@@ -48,10 +56,9 @@ const Login = () => {
         password.current.value
       )
         .then((userCredential) => {
+          console.log(userCredential);
+          
           // Signed in
-          const user = userCredential.user;
-          console.log(user);
-          // ...
         })
         .catch((error) => {
           const errorMessage = error.message;
@@ -62,7 +69,6 @@ const Login = () => {
 
   return (
     <>
-      <Header />
       <div className="flex-1 flex justify-center items-center bg-[url(https://assets.nflxext.com/ffe/siteui/vlv3/d482944d-eab4-4a64-89c9-a07a508a6e42/web/IN-en-20250929-TRIFECTA-perspective_4cf0c8a1-bd35-4d72-a49f-165021531dde_large.jpg)]">
         <form>
           <div className="w-full max-w-md p-8 text-white bg-black rounded-md bg-opacity-70">
@@ -72,6 +78,7 @@ const Login = () => {
             <div className="mb-4">
               {isSignUp && (
                 <input
+                  ref={name}
                   placeholder="Name"
                   type="text"
                   className="w-full p-2 my-2 bg-gray-800 border border-gray-600 rounded"
