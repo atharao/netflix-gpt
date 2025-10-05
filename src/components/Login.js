@@ -20,7 +20,11 @@ const Login = () => {
   };
 
   const handleLogin = () => {
-    const response = validate(email.current.value, password.current.value);
+    const response = validate(
+      email.current.value,
+      password.current.value,
+      isSignUp ? name.current.value : "name"
+    );
     setResponse(response);
 
     if (response) return;
@@ -33,7 +37,7 @@ const Login = () => {
       )
         .then((userCredential) => {
           console.log(userCredential);
-          
+
           const user = userCredential.user;
           updateProfile(user, {
             displayName: name.current.value,
@@ -57,7 +61,7 @@ const Login = () => {
       )
         .then((userCredential) => {
           console.log(userCredential);
-          
+
           // Signed in
         })
         .catch((error) => {
