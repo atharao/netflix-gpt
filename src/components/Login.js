@@ -36,7 +36,6 @@ const Login = () => {
         password.current.value
       )
         .then((userCredential) => {
-          console.log(userCredential);
 
           const user = userCredential.user;
           updateProfile(user, {
@@ -60,7 +59,6 @@ const Login = () => {
         password.current.value
       )
         .then((userCredential) => {
-          console.log(userCredential);
 
           // Signed in
         })

@@ -5,3 +5,6 @@ export const API_OPTIONS = {
     Authorization: "Bearer " + process.env.REACT_APP_TMDB_TOKEN,
   },
 };
+
+export const IMG_POSTER = "https://image.tmdb.org/t/p/w300"
+
