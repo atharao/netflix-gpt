@@ -6,5 +6,30 @@ export const API_OPTIONS = {
   },
 };
 
-export const IMG_POSTER = "https://image.tmdb.org/t/p/w300"
+export const IMG_POSTER = "https://image.tmdb.org/t/p/w300";
 
+export const LANG = [
+  {
+    lang: "English",
+    value: "eng",
+  },
+  {
+    lang: "Hind",
+    value: "hind",
+  },
+  {
+    lang: "Urdu",
+    value: "urd",
+  },
+];
+
+export const SelectedLang = {
+  eng: {
+    search: "seach",
+    placeholder: "enter movie name",
+  },
+  hind: {
+    search: "khojo",
+    placeholder: "movie serach kro",
+  },
+};
