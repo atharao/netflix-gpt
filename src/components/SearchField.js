@@ -2,10 +2,13 @@ import React, { useRef } from "react";
 import { useSelector } from "react-redux";
 import { SelectedLang } from "../utils/constants";
 import gemini from "../utils/gemini";
-import {API_OPTIONS} from "../utils/constants";
+import { API_OPTIONS } from "../utils/constants";
+import { gptMovies } from "../features/movieSlice";
+import { useDispatch } from "react-redux";
 
 const SearchField = () => {
   const currentLang = useSelector((store) => store.language.lang);
+  const dispatch = useDispatch();
 
   const searchValue = useRef(null);
 
@@ -32,12 +35,11 @@ const SearchField = () => {
     });
 
     const arr = gptResults.text.split(",");
-    // console.log(arr);
 
     const promiseArr = arr.map((movie) => fetchGPTResults(movie));
 
     const data = await Promise.all(promiseArr);
-    console.log(data);
+    dispatch(gptMovies({ gptAllMovies: data, movieNames: arr }));
   };
 
   return (
