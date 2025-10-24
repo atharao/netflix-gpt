@@ -2,11 +2,23 @@ import React, { useRef } from "react";
 import { useSelector } from "react-redux";
 import { SelectedLang } from "../utils/constants";
 import gemini from "../utils/gemini";
+import {API_OPTIONS} from "../utils/constants";
 
 const SearchField = () => {
   const currentLang = useSelector((store) => store.language.lang);
 
   const searchValue = useRef(null);
+
+  const fetchGPTResults = async (movie) => {
+    const response = await fetch(
+      "https://api.themoviedb.org/3/search/movie?query=" +
+        movie +
+        "&include_adult=false&language=en-US&page=1",
+      API_OPTIONS
+    );
+    const data = await response.json();
+    return data.results;
+  };
 
   const handleSearch = async () => {
     const gptQuery =
@@ -20,7 +32,12 @@ const SearchField = () => {
     });
 
     const arr = gptResults.text.split(",");
-    console.log(arr);
+    // console.log(arr);
+
+    const promiseArr = arr.map((movie) => fetchGPTResults(movie));
+
+    const data = await Promise.all(promiseArr);
+    console.log(data);
   };
 
   return (
