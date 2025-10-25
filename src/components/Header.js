@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { LOGO, SUPPORTED_LANG } from "../utils/constants";
+import { LOGO, SUPPORTED_LANG, USER_AVATAR } from "../utils/constants";
 import { auth } from "../utils/firebase";
 import { signOut } from "firebase/auth";
 import { useSelector, useDispatch } from "react-redux";
@@ -86,7 +86,7 @@ const Header = () => {
           </button>
           <img
             className="hidden md:block w-10 h-10 mr-2"
-            src={user?.photoURL}
+            src={user?.photoURL || USER_AVATAR}
             alt="userIcon"
           />
           <button
