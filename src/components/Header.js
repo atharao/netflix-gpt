@@ -1,62 +1,70 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { signOut } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import { LOGO, SUPPORTED_LANG } from "../utils/constants";
 import { auth } from "../utils/firebase";
-import { toggleSearch } from "../features/searchToggle";
-import { useDispatch } from "react-redux";
-import { LANG } from "../utils/constants";
-import { selectLang } from "../features/languageSlice";
+import { signOut } from "firebase/auth";
+import { useSelector, useDispatch } from "react-redux";
+import { removeGptMovies, toggleGptSearchView } from "../utils/gptSlice";
+import { changeLanguage } from "../utils/configSlice";
 
 const Header = () => {
-  const user = useSelector((store) => store.user.user);
-  const isSerachPage = useSelector((store) => store.search.searchToggleState);
+  const navigate = useNavigate();
+  const user = useSelector((store) => store.user);
   const dispatch = useDispatch();
+  const showGpt = useSelector((store) => store.gpt.showGptSearch);
 
   const handleSignOut = () => {
     signOut(auth)
       .then(() => {
         // Sign-out successful.
+        navigate("/");
       })
       .catch((error) => {
-        // An error happened.
+        navigate("/error");
       });
   };
 
-  const toggleButton = () => {
-    dispatch(toggleSearch());
+  const handleGptSearch = () => {
+    // Toggle GPT Search
+    dispatch(toggleGptSearchView());
+    dispatch(removeGptMovies());
   };
 
-  const handleSelect = (e) => {
-    dispatch(selectLang(e.target.value));
+  const handleLangChange = (e) => {
+    dispatch(changeLanguage(e.target.value));
   };
-
   return (
-    <div className="flex items-center justify-between p-4 text-white bg-black">
-      <h1 className="text-2xl font-bold">Netflix GPT</h1>
-      {user && (
-        <div className="flex items-center space-x-4">
-          <select
-            name="languages"
-            onChange={handleSelect}
-            className="text-black"
-          >
-            {LANG.map((lang) => (
-              <option value={lang.value} key={lang.lang}>
-                {lang.lang}
-              </option>
-            ))}
-          </select>
-          <button
-            onClick={toggleButton}
-            className="p-2 border border-red-200 rounded-lg"
-          >
-            {isSerachPage ? "Home" : "GPT Search"}
-          </button>
+    <div className="absolute w-full  px-7 py-1  bg-gradient-to-b from-black z-10 flex flex-col md:flex-row justify-between">
+      <img className="w-40 m-auto md:m-0" src={LOGO} alt="logo" />
 
-          <span>Welcome, {user.displayName}</span>
+      {user && (
+        <div className="flex p-2 justify-between items-center">
+          {showGpt && (
+            <select
+              className="p-2 m-2 bg-gray-900 text-white"
+              onChange={handleLangChange}
+            >
+              {SUPPORTED_LANG.map((lang) => (
+                <option key={lang.identifier} value={lang.identifier}>
+                  {lang.name}
+                </option>
+              ))}
+            </select>
+          )}
+
+          <button
+            className=" py-2 px-4 mx-4 my-2 bg-purple-800 text-white rounded-lg"
+            onClick={handleGptSearch}
+          >
+            {showGpt ? "HomePage" : "AI Search"}
+          </button>
+          <img
+            className="hidden md:block w-10 h-10 mr-2"
+            src={user?.photoURL}
+            alt="userIcon"
+          />
           <button
             onClick={handleSignOut}
-            className="p-2 border border-red-200 rounded-lg"
+            className="font-bold text-black bg-white rounded-lg p-2 hover:bg-gray-300"
           >
             Sign Out
           </button>
