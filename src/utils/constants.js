@@ -22,6 +22,3 @@ export const SUPPORTED_LANG = [
   { identifier: "hindi", name: "Hindi" },
   { identifier: "spanish", name: "Spanish" },
 ];
-
-
-export const OPENAI_KEY = process.env.REACT_APP_OPENAI_KEY;
