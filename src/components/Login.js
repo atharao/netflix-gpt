@@ -44,13 +44,13 @@ const Login = () => {
             photoURL: USER_AVATAR,
           })
             .then(() => {
-              const { uid, email } = user;
+              const { uid, email, displayName, photoURL } = auth.currentUser;
               dispatch(
                 addUser({
                   uid: uid,
                   email: email,
-                  displayName: enteredName,
-                  photoURL: USER_AVATAR,
+                  displayName: displayName,
+                  photoURL: photoURL,
                 })
               );
             })
@@ -68,15 +68,6 @@ const Login = () => {
       signInWithEmailAndPassword(auth, enteredEmail, enteredPassword)
         .then((userCredential) => {
           const user = userCredential.user;
-          const { uid, email, displayName, photoURL } = user;
-          dispatch(
-            addUser({
-              uid: uid,
-              email: email,
-              displayName: displayName,
-              photoURL: photoURL,
-            })
-          );
         })
         .catch((error) => {
           const errorCode = error.code;

@@ -3,6 +3,9 @@ import { LOGO, SUPPORTED_LANG } from "../utils/constants";
 import { auth } from "../utils/firebase";
 import { signOut } from "firebase/auth";
 import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { addUser, removeUser } from "../utils/userSlice";
 import { removeGptMovies, toggleGptSearchView } from "../utils/gptSlice";
 import { changeLanguage } from "../utils/configSlice";
 
@@ -16,12 +19,36 @@ const Header = () => {
     signOut(auth)
       .then(() => {
         // Sign-out successful.
-        navigate("/");
       })
       .catch((error) => {
         navigate("/error");
       });
   };
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // sign in
+        const { uid, email, displayName, photoURL } = user;
+        dispatch(
+          addUser({
+            uid: uid,
+            email: email,
+            displayName: displayName,
+            photoURL: photoURL,
+          })
+        );
+        navigate("/browse");
+      } else {
+        // User is signed out
+        dispatch(removeUser());
+        navigate("/");
+      }
+    });
+
+    // UNSUBSCRIBE  when component unmounts
+    return () => unsubscribe(); // cleanup
+  }, [dispatch, navigate]);
 
   const handleGptSearch = () => {
     // Toggle GPT Search
