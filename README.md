@@ -1,65 +1,54 @@
-# 🎬 Netflix GPT
+# Netflix GPT
 
-Netflix GPT is a responsive React web app for exploring movies in a Netflix-style interface. It integrates TMDB API for movie data and Gemini API for AI-powered movie suggestions.
+A Netflix clone application with GPT-powered movie recommendations.
 
----
+## Features
 
-## 🚀 Features
-- ✅ Authentication – Login, Sign-up, and profile update with Firebase  
-- 🎬 Browse Page – Movie trailers, titles, descriptions, and movie lists  
-- 🔍 Gemini AI Search – AI-powered movie suggestions  
-- 📱 Responsive Design – Works across devices using TailwindCSS  
-- ⚡ State Management – Redux slices for user, movies, and AI suggestions  
+- Login/Sign Up Authentication
+- Browse movies by category (Now Playing, Popular, Top Rated, Upcoming)
+- Play movie trailers
+- GPT Search for movie recommendations
+- Multi-language support
 
----
+## Technologies Used
 
-## 🛠️ Tech Stack
-- **Frontend:** React.js, Tailwind CSS  
-- **State Management:** Redux (`userSlice`, `movieSlice`, `gptSlice`)  
-- **Backend & Auth:** Firebase Authentication  
-- **APIs:** TMDB, Gemini AI API  
-- **Deployment:** Production-ready React app  
+- React
+- Redux Toolkit for state management
+- Firebase for authentication
+- Tailwind CSS for styling
+- TMDB API for movie data
+- OpenAI GPT API for movie recommendations
 
-## ⚙️ Installation & Setup
+## Setup Instructions
 
-1. **Clone the repository**  
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/netflix-gpt.git
+   cd netflix-gpt
+   ```
 
-git clone https://github.com/yourusername/netflix-gpt.git
-cd netflix-gpt
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-2. Install dependencies
+3. Create a `.env` file in the root directory based on `.env.example` and add your API keys and Firebase configuration.
 
-npm install
+4. Start the development server:
+   ```bash
+   npm start
+   ```
 
+## Environment Variables
 
-3. Start the development server
+To run this project, you will need to add the following environment variables to your `.env` file:
 
- npm start
-
-
-4. Build for production
-
-npm run build
-
-🔑 API Setup
-
-1. TMDB API
-
-   . Register on TMDB  and create an app
-   . Get your API Key
-
-2. Gemini API
-
-  . Get your API key from Gemini
-
-3. Add environment variables
-
-  . Create a .env file in the root folder and add:
-
-   REACT_APP_TMDB_API_KEY=your_tmdb_api_key
-
-   REACT_APP_GEMINI_API_KEY=your_gemini_api_key  
-
-🤝 Contributing
-
-Contributions are welcome! Feel free to fork this repo and submit pull requests.
+`REACT_APP_TMDB_KEY`
+`REACT_APP_OPENAI_KEY`
+`REACT_APP_FIREBASE_API_KEY`
+`REACT_APP_FIREBASE_AUTH_DOMAIN`
+`REACT_APP_FIREBASE_PROJECT_ID`
+`REACT_APP_FIREBASE_STORAGE_BUCKET`
+`REACT_APP_FIREBASE_MESSAGING_SENDER_ID`
+`REACT_APP_FIREBASE_APP_ID`
+`REACT_APP_FIREBASE_MEASUREMENT_ID`
