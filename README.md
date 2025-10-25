@@ -43,12 +43,19 @@ A Netflix clone application with GPT-powered movie recommendations.
 
 To run this project, you will need to add the following environment variables to your `.env` file:
 
-`REACT_APP_TMDB_KEY`
-`REACT_APP_OPENAI_KEY`
-`REACT_APP_FIREBASE_API_KEY`
-`REACT_APP_FIREBASE_AUTH_DOMAIN`
-`REACT_APP_FIREBASE_PROJECT_ID`
-`REACT_APP_FIREBASE_STORAGE_BUCKET`
-`REACT_APP_FIREBASE_MESSAGING_SENDER_ID`
-`REACT_APP_FIREBASE_APP_ID`
-`REACT_APP_FIREBASE_MEASUREMENT_ID`
+// TMDB Key
+REACT_APP_TMDB_KEY="YOUR_TMDB_API_KEY_HERE"
+
+// Firebase Keys
+REACT_APP_API_KEY="YOUR_FIREBASE_API_KEY_HERE"
+REACT_APP_AUTH_DOMAIN="your-app.firebaseapp.com"
+REACT_APP_PROJECT_ID="your-app"
+REACT_APP_STORAGE_BUCKET="your-app.appspot.com"
+REACT_APP_MESSAGING_SENDER_ID="YOUR_SENDER_ID"
+REACT_APP_APP_ID="YOUR_APP_ID"
+REACT_APP_MEASUREMENT_ID="YOUR_MEASUREMENT_ID"
+
+// Gemini Key
+REACT_APP_GEMINI_KEY="YOUR_GEMINI_API_KEY_HERE"
+
+I have hosted this application on firebase using `firebase deploy --only hosting:atharao-netflix-gpt`. If someone is having problems with the API, try using a VPN.
